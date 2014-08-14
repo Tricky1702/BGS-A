@@ -206,7 +206,7 @@ this.addToLRC = function(obj)
 		default: return(false);
 	}
 	if(typeof(obj.id)==='undefined') obj.id=obj.type;
-	if(typeof(obj.action)==='string' && typeof(obj.gal!=='number')){
+	if(typeof(obj.action)==='string' && typeof(obj.gal)!=='number'){
 		for(var k=0;k<8;k++) this.LRC[k].push(obj);
 	} else this.LRC[obj.gal].unshift(obj);
 	this.LRCResort = true;
