@@ -1,0 +1,12 @@
+uniform sampler2D uCMap;
+uniform float uTime;
+varying vec2 vTexCoord;
+
+void main(void)
+{
+	vec4 colorMap = texture2D(uCMap,vTexCoord);
+	if(colorMap.r<0.05 && colorMap.g<0.05 && colorMap.b<0.05) discard;
+	if(uTime<4.0) colorMap *= uTime*0.25;
+	if(vTexCoord.y>0.384 && vTexCoord.y<0.573 && vTexCoord.x>0.14+sqrt(float(uTime))/5.0 && vTexCoord.x<0.833) discard;
+	gl_FragColor = colorMap;
+}

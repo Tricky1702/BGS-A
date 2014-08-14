@@ -1,0 +1,30 @@
+// 37 instructions, 3 R-regs, 0 H-regs - 17 ALU
+uniform sampler2D colorMap;
+uniform float fTime;
+uniform vec4 ovSpecials;
+varying vec2 vTexCoord;
+
+void main()
+{
+	vec2 coords = vTexCoord.xy;
+	coords.y /= ovSpecials.z;
+	vec2 cen = vec2(0.5);
+	cen.y /= ovSpecials.z;
+	cen -= coords.xy;
+	float rad = length(cen);
+	float t = fTime+1.0;
+	float rrad = 1.0/rad;
+	// Texture
+	vec2 mcen = 0.07*log(rad)*normalize(cen)*t*5.0;
+	vec2 tem = cen*(3.0-t);
+	vec4 FogColor = vec4(0.06,0.05,0.1,0.1)*exp(t);
+	float fadeT = max(1.5-fTime*0.2,0.1);
+	vec4 CurrentColor = texture2D(colorMap,coords.xy+tem+mcen);
+	CurrentColor += texture2D(colorMap,coords.xy+mcen);
+	FogColor.b += ovSpecials.x*t;
+	CurrentColor.r *= ovSpecials.y*2.0*t;
+	float FogDistance = rrad*-0.01;
+	vec4 endColor = mix(FogColor,CurrentColor,exp(FogDistance));
+	if(endColor.a>3.9) discard;
+	gl_FragColor = endColor;
+}

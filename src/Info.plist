@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleGetInfoString</key>
+	<string>BGS-A 1.9.2</string>
+	<key>CFBundleName</key>
+	<string>BGS</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.9.2</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>(C) 2010-2014 - Pagroove, Phantor Gorth, Thargoid, Svengali &amp; Tricky</string>
+</dict>
+</plist>

@@ -1,0 +1,49 @@
+// 118 instructions, 5 R-regs, 1 H-regs - 64 ALU
+uniform float fTime,aspect,shape;
+uniform int timeOffset;
+uniform sampler2D diffuseMap;
+varying vec2 vTexCoord;
+
+const float PI = 3.1415926;
+const float hPI = 1.5707963;
+const vec3 tint = vec3(0.5626,0.3587,0.0858);
+const mat2 rruv = mat2(1.8152,0.6,0.512,0.22);
+
+void main(void)
+{
+	float cshape = shape;
+	float offs = float(timeOffset)*0.4;
+	float slow = offs+1.5+fTime*0.8;
+	float ot = 1.0+fTime*0.01;
+	//tunnel
+	vec2 p = vTexCoord/slow;
+	p.y *= 1.0/aspect;
+	float a = atan(p.y,p.x);
+	float r = pow(pow(p.x*p.x,cshape)+pow(p.y*p.y,cshape),0.5/cshape)*slow;
+	vec2 uv = vec2((0.35*slow+0.1/r)*slow*0.6,abs(a)/PI);
+	vec3 col = texture2D(diffuseMap,uv).xyz;
+	//lines
+	float tlen = length(p);
+	float lc = (0.02/abs(p.x+p.y))+(0.02/abs(p.x-p.y));
+	vec3 cline = vec3(3.0*lc)*tint;
+	float dt = uv.x-PI/ot;
+	// kick door
+	if(dt>0.0){
+		col = cline*0.25;
+		cline *= 0.0;
+		float iris = max(1.205,fTime);
+		float ang = a+PI+2.0*iris;
+		float ds = (tlen/(iris*slow))*900.0*(9.5-(offs*9.5));
+		float tds = (cos(ot-hPI)/cos(mod(ang,hPI)-hPI))*(max(iris-1.205,0.0)*(600.0*iris));
+		if(ds*7.0>tds){
+			if((ds*6.5-iris)>tds) col = mix(texture2D(diffuseMap,p*rruv*0.06).xyz,tint.xyz,0.2);
+			float brig = 0.4/(dt/r);
+			brig -= brig/lc;
+			col += tint*abs(brig);
+		} else {
+			if(dt>0.1) discard;
+		}
+	}
+	//output
+	gl_FragColor = vec4(mix(col,cline,0.07),1.0)*min(1.0,fTime);
+}

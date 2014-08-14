@@ -1,0 +1,99 @@
+{
+	"bgs_docking" = {
+		is_break_pattern = true;
+		model = "bgs_hyper.dat";
+		materials = {
+			"bgs_hyper.png" = {
+				fragment_shader = "bgs_docking.fragment";
+				vertex_shader = "bgs_docking.vertex";
+				textures = (
+					{name="bgs_docking_tunnel01.png"; repeat_s = true; repeat_t = true;}
+				);
+				uniforms = {
+					diffuseMap = {type = texture; value = 0;};
+					fTime = "timeElapsedSinceSpawn";
+					shape = "shaderFloat1";
+					aspect = "shaderFloat2";
+					timeOffset = "shaderInt1";
+				};
+			};
+		};
+		script = "bgs_docking_effect.js";
+	};
+	"bgs_hyper" = {
+		is_break_pattern = true;
+		model = "bgs_hyper.dat";
+		materials = {
+			"bgs_hyper.png" = {
+				fragment_shader = "bgs_hyper.fragment";
+				vertex_shader = "bgs_hyper.vertex";
+				textures = ({name = "bgs_hyper.png"; repeat_s = true; repeat_t = true;});
+				uniforms = {
+					colorMap = {type = texture; value = 0;};
+					ovSlideC = "shaderInt1";
+					ovSlideI = "shaderInt2";
+					ovSettings = "shaderVector1";
+					ovSpecials = "shaderVector2";
+					fTime = "timeElapsedSinceSpawn";
+				};
+			};
+		};
+		script = "cabal_common_oxps_ov.js";
+	};
+	"bgs_hyper_redux" = {
+		is_break_pattern = true;
+		model = "bgs_hyper.dat";
+		materials = {
+			"bgs_hyper.png" = {
+				fragment_shader = "bgs_hyper_redux.fragment";
+				vertex_shader = "bgs_hyper.vertex";
+				textures = ({name = "bgs_hyper.png"; repeat_s = true; repeat_t = true;});
+				uniforms = {
+					colorMap = {type = texture; value = 0;};
+					ovSlideC = "shaderInt1";
+					ovSlideI = "shaderInt2";
+					ovSettings = "shaderVector1";
+					ovSpecials = "shaderVector2";
+					fTime = "timeElapsedSinceSpawn";
+				};
+			};
+		};
+		script = "cabal_common_oxps_ov.js";
+	};
+	"bgs_exitWormhole_effect" = {
+		materials = {
+			"bgs_exitWormhole_effect.png" = {
+				fragment_shader = "bgs_exitWormhole.fragment";
+				vertex_shader = "bgs_exitWormhole.vertex";
+				textures = ({name = "bgs_exitWormhole_effect.png"; repeat_s = true; repeat_t = true;});
+				uniforms = {
+					colorMap = {type = texture; value = 0;};
+					fTime = "timeElapsedSinceSpawn";
+				};
+			};
+		};
+		model = "bgs_exitWormhole_effect.dat";
+		script = "bgs_exitWormhole_effect.js";
+		subentities = (
+			{type = flasher; position = (0,0,0); frequency = 0; size = 250; color = blueColor;}
+		);
+	};
+	"bgs_exitWormhole_misjump" = {
+		materials = {
+			"bgs_exitWormhole_effect.png" = {
+				fragment_shader = "bgs_exitWormhole.fragment";
+				vertex_shader = "bgs_exitWormhole.vertex";
+				textures = ({name = "bgs_exitWormhole_misjump.png"; repeat_s = true; repeat_t = true;});
+				uniforms = {
+					colorMap = {type = texture; value = 0;};
+					fTime = "timeElapsedSinceSpawn";
+				};
+			};
+		};
+		model = "bgs_exitWormhole_effect.dat";
+		script = "bgs_exitWormhole_effect.js";
+		subentities = (
+			{type = flasher; position = (0,0,0); frequency = 0; size = 250; color = redColor;}
+		);
+	};
+}

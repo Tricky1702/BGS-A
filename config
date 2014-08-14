@@ -1,0 +1,47 @@
+# config
+#
+# Copyright © 2014 Richard Thomas Harrison (Tricky)
+#
+# This work is licensed under the Creative Commons License
+# Attribution-Noncommercial-Share Alike 4.0 International (CC BY-NC-SA 4.0)
+#
+# To view a copy of this license, visit
+# http://creativecommons.org/licenses/by-nc-sa/4.0/ or send an email
+# to info@creativecommons.org
+#
+# Config file for the BackGroundSet OXP/OXZ.
+
+# Base directory.
+basedir = /home/Richard/.Oolite/OXPs
+
+# Base name.
+name = BGS-A
+
+# Directories to install OXP's to.
+oxpinstall = /C/Games/Oolite/v1.77/Deployment /C/Games/Oolite/v1.77/Development
+
+# Create OXZ's
+oxz = true
+
+# Directories to install OXZ's to. Ignored if the above is not true.
+oxzinstall = /C/Games/Oolite/v1.80/Deployment /C/Games/Oolite/v1.80/Development
+
+# Sub-directory to place OXP's and OXZ's in AddOns. Optional.
+subdir = Tricky.oxp
+
+# Other global variables.
+copyright = (C) 2010-2014, License: CC BY-NC-SA 4.0
+license_full = Attribution-Noncommercial-Share Alike 4.0 International
+license_url = http://creativecommons.org/licenses/by-nc-sa/4.0/
+
+# Manifest variables.
+author = P.A.Groove, Phantor Gorth, Thargoid, Svengali, Tricky
+category = Ambience
+description = Framework for images, sounds and ambient music. Depends on Cabal Common Library 1.7 and Snoopers 2.5.
+download_url = http://rockthehalo.org.uk/oolite/OXPs/BGS-A_1.9.2.oxz
+identifier = oolite.oxp.Svengali.BGS
+information_url = http://wiki.alioth.net/index.php/BGS
+license = CC BY-NC-SA 4.0
+required_oolite_version = 1.79
+title = BackGroundSet
+version = 1.9.2

@@ -1,0 +1,25 @@
+{
+	// Define background pics
+	equip_ship				= "bgs-i_equipship.png";
+	interfaces				= "bgs-i_interfaces.png";
+	intro					= "bgs-i_intro.png";
+	load_save				= "bgs-i_loadsave.png";
+	long_range_chart		= "bgs-i_longrangechart.png";
+	long_range_chart_mission = "bgs-i_longrangechart_mission.png";
+	manifest				= "bgs-i_manifest.png";
+	market					= "bgs-i_market.png";
+	report					= "bgs-i_report.png";
+	settings				= "bgs-i_settings.png";
+	shipyard				= "bgs-i_shipyard.png";
+	short_range_chart		= "bgs-i_shortrangechart.png";
+	short_range_chart_mission = "bgs-i_shortrangechart_mission.png";
+	status					= "bgs-i_manifest.png";
+	status_docked			= "bgs-i_statusdocked.png";
+	status_in_flight		= "bgs-i_statusinflight.png";
+	status_red_alert		= "bgs-i_statusredalert.png";
+	system_data				= "bgs-i_systemdata.png";
+	system_data_nova		= "bgs-i_systemdatanova.png";
+	// Define menue overlays
+	paused_docked_overlay	= "bgs-i_overlay_paused.png";
+	paused_overlay			= "bgs-i_overlay_paused.png";
+}

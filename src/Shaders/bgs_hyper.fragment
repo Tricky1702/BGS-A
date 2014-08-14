@@ -1,0 +1,69 @@
+// 136 instructions, 5 R-regs, 0 H-regs - 59 ALU
+uniform sampler2D colorMap;
+uniform float fTime;
+uniform vec4 ovSpecials;
+varying vec2 vTexCoord;
+
+const float SQRT3 = 1.73205;
+const float PI = 3.1415926;
+
+vec2 repeat(vec2 p, float n){
+	vec2 np = p*n;
+	vec2 npreal = np-fract(np);
+	np.x += fract(npreal.y*0.5);
+	return fract(np)*2.0-1.0;
+}
+float hexDistance(vec2 ip){
+	vec2 p = abs(ip*vec2(SQRT3*0.5,0.75));
+	float d = dot(p,vec2(-0.5,0.8660254))-SQRT3*0.25;
+	return (d>0.0)?min(d,(SQRT3*0.5-p.x)):min(-d,p.x);
+}
+
+void main()
+{
+	vec2 coords = vTexCoord.xy;
+	coords.y /= ovSpecials.z;
+	vec2 cen = vec2(0.5);
+	cen.y /= ovSpecials.z;
+	cen -= coords.xy;
+	float a = atan(cen.y,cen.x);
+	float angle = fract(a/PI);
+	float rad = length(cen);
+	float t = fTime+1.0;
+	float t1 = max(-1.0+log(t),0.0);
+	float t2 = max(t1*0.6-0.2,0.0);
+	float rrad = 1.0/rad;
+	// Texture
+	vec2 mcen = 0.07*log(rad)*normalize(cen)*t*5.0;
+	vec2 tem = cen*(3.0-t);
+	vec4 FogColor = vec4(0.06,0.05,0.1,0.1)*exp(t);
+	float fadeT = max(1.5-fTime*0.2,0.1);
+	vec4 CurrentColor = texture2D(colorMap,coords.xy+tem+mcen);
+	CurrentColor += texture2D(colorMap,coords.xy+mcen);
+	FogColor.b += ovSpecials.x*t;
+	CurrentColor.r *= ovSpecials.y*2.0*t;
+	float FogDistance = rrad*-0.01;
+	vec4 endColor = mix(FogColor,CurrentColor,exp(FogDistance));
+	if(endColor.a>3.9) discard;
+	// Stars
+	float as = angle*256.0;
+	float angleRnd = floor(as)+1.0;
+	float radDist = fract(angleRnd*fract(angleRnd*0.82657)*13.724)/SQRT3;
+	float adist = radDist/rad*0.1;
+	float bdist = (t+fract(angleRnd*fract(angleRnd*0.7235)*45.1)*10.0)*0.1+adist;
+	bdist = abs(fract(bdist)-0.5);
+	float color = (max(0.0,0.5-bdist*30.0/adist)*abs(fract(as))*5.0/adist*radDist)*(t-1.5);
+	endColor += color;
+	// Tunnel
+	tem = vec2(a/PI,rrad+t);
+	vec2 p = repeat(tem,12.0);
+	float d = hexDistance(p);
+	float grid = smoothstep(-0.1,0.26,d)/t2;
+	vec3 rgb = vec3(0.27,0.07,0.35)/grid;
+	// Glowing lines
+	tem *= cen-t-adist/tem.y;
+	float y = (0.8/abs(cos(tem.x*t1)+cos(tem.y)*sin(t))*t2)*t2;
+	rgb += vec3(y*rad,y*0.4,y*0.8);
+	// Output
+	gl_FragColor = endColor+vec4(rgb,1.0);
+}

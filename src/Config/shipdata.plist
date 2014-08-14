@@ -1,0 +1,22 @@
+{
+	"bgs-xload" = {
+		ai_type = "nullAI.plist";
+		max_flight_pitch = 0;
+		max_flight_roll = 0;
+		model = "bgs-xload.dat";
+		name = "bgs-xload";
+		roles = "bgs-xload snoopers_model(0)";
+		shaders = {
+			"bgs-xload.png" = {
+				fragment_shader = "bgs-xload";
+				vertex_shader = "bgs-xload";
+				textures = ({name = "bgs-xload.png"; repeat_s = true; repeat_t = true;});
+				uniforms = {
+					uCMap = {type = texture; value = 0;};
+					uTime = "timeElapsedSinceSpawn";
+				};
+			};
+		};
+		smooth = true;
+	};
+}

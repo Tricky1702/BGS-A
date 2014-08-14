@@ -1,0 +1,8 @@
+varying vec2 vTexCoord;
+
+void main(void)
+{
+	vec2 Position = gl_Vertex.xy;
+	gl_Position = vec4(Position,-1.0,1.0);
+	vTexCoord = Position*0.5;
+}

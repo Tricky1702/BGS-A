@@ -1,0 +1,38 @@
+/* manifest.plist
+ *
+ * Copyright $COPYRIGHT$
+ *
+ * This work is licensed under the Creative Commons
+ * $LICENSE_FULL$ ($LICENSE$)
+ *
+ * To view a copy of this license, visit
+ * $LICENSE_URL$ or send an email
+ * to info@creativecommons.org
+ *
+ * manifest.plist for the $TITLE$ OXP.
+ */
+
+{
+    author = "$AUTHOR$";
+    category = "$CATEGORY$";
+    description = "$DESCRIPTION$";
+    download_url = "$DOWNLOAD_URL$";
+    identifier = $IDENTIFIER$;
+    information_url = "$INFORMATION_URL$";
+    license = "$LICENSE$";
+    required_oolite_version = $REQUIRED_OOLITE_VERSION$;
+    requires_oxps = (
+        {
+            identifier = oolite.oxp.Svengali.CCL;
+            version = 1.7;
+            description = "Depends on Cabal Common Library 1.7.";
+        },
+        {
+            identifier = oolite.oxp.Svengali.Snoopers;
+            version = 2.5;
+            description = "Depends on Snoopers 2.5.";
+        }
+    );
+    title = "$TITLE$";
+    version = $VERSION$;
+}

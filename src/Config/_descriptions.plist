@@ -1,0 +1,38 @@
+{
+	// Assorted messages used by the onboard computer. Cleaned version.
+	"aft-view-string"				= "";
+	"autopilot-cannot-dock-with-target" = "";
+	"autopilot-off"					= "";
+	"autopilot-on"					= "";
+	"autopilot-out-of-range"		= "";
+	"cloak-low-juice"				= "";
+	"cloak-off"						= "";
+	"cloak-on"						= "";
+	"ecm-on"						= "";
+	"ecm-out-of-juice"				= "";
+	"energy-low"					= "";
+	"forward-view-string"			= "";
+	"fuel-inject-on"				= "";
+	"fuel-out"						= "";
+	"fuel-scoop-active"				= "";
+	"hold-full"						= "";
+	"ident-locked-onto-@"			= "ID locked onto %@.";
+	"ident-off"						= "";
+	"ident-on"						= "";
+	"incoming-missile"				= "";
+	"jump-mass-locked"				= "";
+	"missile-safe"					= "";
+	"port-view-string"				= "";
+	"starboard-view-string"			= "";
+	"target-lost"					= "";
+	"weapon-overheat"				= "";
+	"witch-blocked-by-@"			= "";
+	"witch-engine-malfunction"		= "";
+	"witch-galactic-in-f-seconds"	= "";
+	"witch-no-fuel"					= "";
+	"witch-no-target"				= "";
+	"witch-to-@-in-f-seconds"		= "";
+	"witch-too-far"					= "";
+	"witch-user-abort"				= "";
+	"witch-user-galactic-abort"		= "";
+}
