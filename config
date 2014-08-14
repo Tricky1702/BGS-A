@@ -35,7 +35,7 @@ license_full = Attribution-Noncommercial-Share Alike 4.0 International
 license_url = http://creativecommons.org/licenses/by-nc-sa/4.0/
 
 # Manifest variables.
-author = P.A.Groove, Phantor Gorth, Thargoid, Svengali, Tricky
+author = P.A.Groove, Phantor Gorth, Thargoid, Svengali and Tricky
 category = Ambience
 description = Framework for images, sounds and ambient music. Depends on Cabal Common Library 1.7 and Snoopers 2.5.
 download_url = http://rockthehalo.org.uk/oolite/OXPs/BGS-A_1.9.2.oxz

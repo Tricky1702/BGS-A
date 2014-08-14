@@ -1,8 +1,23 @@
+/* BGS-XMapping
+ *
+ * Copyright $COPYRIGHT$
+ *
+ * This work is licensed under the Creative Commons License
+ * $LICENSE_FULL$ ($LICENSE$)
+ *
+ * To view a copy of this license, visit
+ * $LICENSE_URL$ or send an email
+ * to info@creativecommons.org
+ *
+ * World script to setup BGS-XMapping.
+ */
+
 "use strict";
-this.name = "BGS-XMapping";
-this.author = "Pagroove, PhantorGorth and Svengali";
-this.copyright = "CC-by-nc-sa-3.0";
+this.author = "Pagroove, PhantorGorth, Svengali and Tricky";
+this.copyright = "$COPYRIGHT$";
 this.description = "Advanced mapping.";
+this.license = "$LICENSE$";
+this.name = "BGS-XMapping";
 this.version = "1.9";
 
 this.startUp = function()

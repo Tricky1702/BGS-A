@@ -1,9 +1,24 @@
+/* BGS-M
+ *
+ * Copyright $COPYRIGHT$
+ *
+ * This work is licensed under the Creative Commons License
+ * $LICENSE_FULL$ ($LICENSE$)
+ *
+ * To view a copy of this license, visit
+ * $LICENSE_URL$ or send an email
+ * to info@creativecommons.org
+ *
+ * World script to setup BGS-M.
+ */
+
 "use strict";
-this.name = "BGS-M";
-this.author = "Pagroove, PhantorGorth, Thargoid and Svengali";
-this.copyright = "(C)2010-2013, License:CC-by-nc-sa-3.0";
+this.author = "P.A.Groove, Phantor Gorth, Thargoid, Svengali and Tricky";
+this.copyright = "$COPYRIGHT$";
 this.description = "Ambient sounds, music and images framework.";
-this.version = "1.9.1";
+this.license = "$LICENSE$";
+this.name = "BGS-M";
+this.version = "1.9.2";
 
 this.ambientSounds = true; // Ambient sounds (crowd layer + engine mumble). Default true.
 this.bgsChatterPause = 24; // Max pause for chatter in seconds. Default 24.

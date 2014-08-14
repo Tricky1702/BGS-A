@@ -1,8 +1,23 @@
+/* BGS Exit Wormhole Effect
+ *
+ * Copyright $COPYRIGHT$
+ *
+ * This work is licensed under the Creative Commons License
+ * $LICENSE_FULL$ ($LICENSE$)
+ *
+ * To view a copy of this license, visit
+ * $LICENSE_URL$ or send an email
+ * to info@creativecommons.org
+ *
+ * Player ship script to setup the BGS exit wormhole effect.
+ */
+
 "use strict";
-this.name = "bgs_exitWormhole_effect";
 this.author = "Pagroove, PhantorGorth, Thargoid and Svengali";
-this.copyright = "(C)2010-2013, License:CC-by-nc-sa-3.0";
+this.copyright = "$COPYRIGHT$";
 this.description = "Shrink effect script.";
+this.license = "$LICENSE$";
+this.name = "bgs_exitWormhole_effect";
 this.version = "1.9";
 
 this.effectSpawned = function()

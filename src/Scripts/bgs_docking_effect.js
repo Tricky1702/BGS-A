@@ -1,8 +1,23 @@
+/* BGS Docking Effect
+ *
+ * Copyright $COPYRIGHT$
+ *
+ * This work is licensed under the Creative Commons License
+ * $LICENSE_FULL$ ($LICENSE$)
+ *
+ * To view a copy of this license, visit
+ * $LICENSE_URL$ or send an email
+ * to info@creativecommons.org
+ *
+ * Player ship script to setup the BGS docking effect.
+ */
+
 "use strict";
-this.name = "bgs_docking_effect";
-this.author = "Svengali";
-this.copyright = "CC-by";
+this.author = "Svengali and Tricky";
+this.copyright = "$COPYRIGHT$";
 this.description = "FX script";
+this.license = "$LICENSE$";
+this.name = "bgs_docking_effect";
 this.version = "1.9";
 
 this.effectSpawned = function()
