@@ -18,7 +18,7 @@ this.copyright = "$COPYRIGHT$";
 this.description = "Ambient sounds, music and images framework.";
 this.license = "$LICENSE$";
 this.name = "BGS-M";
-this.version = "1.9.2";
+this.version = "1.9.3";
 
 this.ambientSounds = true; // Ambient sounds (crowd layer + engine mumble). Default true.
 this.bgsChatterPause = 24; // Max pause for chatter in seconds. Default 24.
@@ -711,6 +711,7 @@ this.setShaderTextures = function(st,land)
 	var shs = [0.5,1,2,3,5], sh = 2.5, as = 1.0, sit = null, sis = null;
 	if(!st.isMainStation && !st.scriptInfo) return;
 	if(st.scriptInfo){
+        if(st.scriptInfo.bgs_tunnel_off && st.scriptInfo.bgs_tunnel_off === 'true') return;
 		if(st.scriptInfo.bgs_tunnel_texture) sit = st.scriptInfo.bgs_tunnel_texture;
 		if(st.scriptInfo.bgs_tunnel_shape) sis = parseFloat(st.scriptInfo.bgs_tunnel_shape);
 	}
