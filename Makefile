@@ -132,8 +132,8 @@ $(BASEDIR)/$(BASENAME): $(BASEDIR)/$(BASENAME)/$(OXPNAME)
 	$(CP) src/* $@/$(OXPNAME)
 
 docs:
-	$(CP) Doc/BGS-A1.9.2_Readme.rtf $(BASEDIR)/$(BASENAME)
-	$(CP) Doc/BGS-A1.9.2_Readme.rtf $(BASEDIR)/$(BASENAME)/$(OXPNAME)
+	$(CP) Doc/BGS-A_1.9.3_Readme.rtf $(BASEDIR)/$(BASENAME)
+	$(CP) Doc/BGS-A_1.9.3_Readme.rtf $(BASEDIR)/$(BASENAME)/$(OXPNAME)
 
 process_files:
 	@tools/process_files.sh $(_NAME) $(_VERSION)
