@@ -18,7 +18,7 @@ this.copyright = "$COPYRIGHT$";
 this.description = "Ambient sounds, music and images framework.";
 this.license = "$LICENSE$";
 this.name = "BGS-M";
-this.version = "1.9.3";
+this.version = "$VERSION$";
 
 this.ambientSounds = true; // Ambient sounds (crowd layer + engine mumble). Default true.
 this.bgsChatterPause = 24; // Max pause for chatter in seconds. Default 24.
