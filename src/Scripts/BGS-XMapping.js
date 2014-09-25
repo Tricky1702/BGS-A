@@ -27,7 +27,7 @@
         if(!worldScripts.Cabal_Common_Functions || typeof(worldScripts.Cabal_Common_Functions.Cabal_Common)==='undefined'){this.killSelf(" -> Cabal_Common_Library is missing"); return;}
         this.helper = new worldScripts.Cabal_Common_Functions.Cabal_Common();
         if(this.helper.internalVersion<15){this.killSelf(" -> Cabal_Common_Library is too old"); return;}
-        var optional = ["snoopers","2.5"];
+        var optional = ["snoopers",null];
         this.$snoopersInstalled = true;
         if(!this.helper.oxpVersionTest(this.name,optional)) this.$snoopersInstalled = false;
         if(worldScripts["BGS-M"].startup) worldScripts["BGS-M"].startup();
