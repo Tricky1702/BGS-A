@@ -1439,6 +1439,7 @@ player, removeFrameCallback, setScreenBackground, setScreenOverlay, system, worl
 
                     break;
                 }
+
                 if (ov) {
                     if (typeof t.action === 'string') {
                         if ((clock.absoluteSeconds - this.lastMapPress) > 1) {
@@ -2049,27 +2050,27 @@ player, removeFrameCallback, setScreenBackground, setScreenOverlay, system, worl
             this.bgsSCB.play();
         }
 
-        if (!st.isMainStation && !st.scriptInfo) {
+        if (!station.isMainStation && !station.scriptInfo) {
             return;
         }
 
-        if (st.scriptInfo) {
-            if (st.scriptInfo.bgs_tunnel_off && st.scriptInfo.bgs_tunnel_off === 'true') {
+        if (station.scriptInfo) {
+            if (station.scriptInfo.bgs_tunnel_off && station.scriptInfo.bgs_tunnel_off === 'true') {
                 return;
             }
 
-            if (st.scriptInfo.bgs_tunnel_texture) {
-                sit = st.scriptInfo.bgs_tunnel_texture;
+            if (station.scriptInfo.bgs_tunnel_texture) {
+                sit = station.scriptInfo.bgs_tunnel_texture;
             }
 
-            if (st.scriptInfo.bgs_tunnel_shape) {
-                sis = parseFloat(st.scriptInfo.bgs_tunnel_shape);
+            if (station.scriptInfo.bgs_tunnel_shape) {
+                sis = parseFloat(station.scriptInfo.bgs_tunnel_shape);
             }
         }
 
-        if (st.isMainStation || sit || sis) {
+        if (station.isMainStation || sit || sis) {
             if (!sis) {
-                s = st.subEntities;
+                s = station.subEntities;
                 l = s.length;
 
                 for (i = 0; i < l; i += 1) {
@@ -2114,7 +2115,7 @@ player, removeFrameCallback, setScreenBackground, setScreenOverlay, system, worl
                 ent.setMaterials(ta);
             }
 
-            st.breakPattern = false;
+            station.breakPattern = false;
         }
 
         return;
