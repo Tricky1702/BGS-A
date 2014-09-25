@@ -37,6 +37,8 @@ http://wiki.alioth.net/index.php/BGS_Doc
 # REQUIREMENTS
 - Oolite v1.77.
 - Cabal_Common_Library1.7.oxp
+
+# OPTIONAL
 - Snoopers2.5.oxp
 
 # PROBLEMS

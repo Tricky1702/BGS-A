@@ -94,7 +94,7 @@ default: test
 
 all: bgs
 
-bgs: $(BASEDIR)/$(BASENAME) process_files docs makearchive $(OXPDIRS) $(OXZPATH)
+bgs: $(BASEDIR)/$(BASENAME) process_files docs makearchive
 
 test:
 	@echo "BASEDIR:             \`$(BASEDIR)'"
@@ -114,7 +114,7 @@ ifeq ($(OXZ),true)
 	@echo "OXZPATH:             \`$(OXZPATH)'"
 endif
 
-release: clean bgs
+release: clean bgs $(OXPDIRS) $(OXZPATH)
 
 $(OXPDIRS):
 	@$(MD) -p $@

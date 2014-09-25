@@ -20,17 +20,19 @@
     identifier = $IDENTIFIER$;
     information_url = "$INFORMATION_URL$";
     license = "$LICENSE$";
+    optional_oxps = (
+        {
+            identifier = oolite.oxp.Svengali.Snoopers;
+            version = 2.5;
+            description = "Optional dependency on Snoopers 2.5.";
+        }
+    );
     required_oolite_version = $REQUIRED_OOLITE_VERSION$;
     requires_oxps = (
         {
             identifier = oolite.oxp.Svengali.CCL;
             version = 1.7;
             description = "Depends on Cabal Common Library 1.7.";
-        },
-        {
-            identifier = oolite.oxp.Svengali.Snoopers;
-            version = 2.5;
-            description = "Depends on Snoopers 2.5.";
         }
     );
     title = "$TITLE$";
