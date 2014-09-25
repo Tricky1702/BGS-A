@@ -27,9 +27,13 @@
         if(!worldScripts.Cabal_Common_Functions || typeof(worldScripts.Cabal_Common_Functions.Cabal_Common)==='undefined'){this.killSelf(" -> Cabal_Common_Library is missing"); return;}
         this.helper = new worldScripts.Cabal_Common_Functions.Cabal_Common();
         if(this.helper.internalVersion<15){this.killSelf(" -> Cabal_Common_Library is too old"); return;}
-        var optional = ["snoopers",null];
+        var snoopersCheck = ["snoopers",null];
         this.$snoopersInstalled = true;
-        if(!this.helper.oxpVersionTest(this.name,optional)) this.$snoopersInstalled = false;
+        if(!this.helper.oxpVersionTest(this.name,snoopersCheck)) this.$snoopersInstalled = false;
+        var snoopersCheckVersion = ["snoopers","2.5"];
+        if(this.$snoopersInstalled){
+            if(!this.helper.oxpVersionTest(this.name,snoopersCheckVersion)){this.killSelf(" -> Need Snoopers 2.5"); return;}
+        }
         if(worldScripts["BGS-M"].startup) worldScripts["BGS-M"].startup();
         this.minInter = 4; // minimum days - release 4
         this.maxInter = 15; // maximum days - release 15
