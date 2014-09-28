@@ -2,8 +2,8 @@
 unparam: true, todo: true, white: true, indent: 4, maxerr: 50, maxlen: 120 */
 /*jshint boss: true, curly: true, eqeqeq: true, eqnull: true, es5: true, evil: true, forin: true, laxbreak: true,
 loopfunc: true, noarg: true, noempty: true, strict: true, nonew: true, undef: true */
-/*global Sound, SoundSource, Timer, Vector3D, addFrameCallback, clock, galaxyNumber, guiScreen, log, mission, oolite,
-player, removeFrameCallback, setScreenBackground, setScreenOverlay, system, worldScripts */
+/*global JSON, Sound, SoundSource, Timer, Vector3D, addFrameCallback, clock, galaxyNumber, guiScreen, log, mission,
+oolite, player, removeFrameCallback, setScreenBackground, setScreenOverlay, system, worldScripts */
 
 /* BGS-M
  *
@@ -1059,7 +1059,7 @@ player, removeFrameCallback, setScreenBackground, setScreenOverlay, system, worl
     };
 
     /**
-     * Inserts a overlay for the special keys. Make sure that the object is extensible and not sealed or frozen.  
+     * Inserts a overlay for the special keys. Make sure that the object is extensible and not sealed or frozen.
      *
      * @param obj
      *              object with the following properties:
@@ -1098,38 +1098,38 @@ player, removeFrameCallback, setScreenBackground, setScreenOverlay, system, worl
      * Type 1 (Circle):
      *
      * posx
-     *      Number. Position of the center. X coordinate in LY. 
+     *      Number. Position of the center. X coordinate in LY.
      * posy
-     *      Number. Position of the center. Y coordinate in LY. 
+     *      Number. Position of the center. Y coordinate in LY.
      * radi
-     *      Number. Radius. 
+     *      Number. Radius.
      *
      * Type 2 (Rectangle):
      *
      * posx
-     *      Number. Position of the center. X coordinate in LY. 
+     *      Number. Position of the center. X coordinate in LY.
      * posy
-     *      Number. Position of the center. Y coordinate in LY. 
+     *      Number. Position of the center. Y coordinate in LY.
      * w
-     *      Number. Width. 
+     *      Number. Width.
      * h
-     *      Number. Height. 
+     *      Number. Height.
      *
      * Type 3 (nPoly):
      *
      * nvert
-     *      Number. Number of points. 
+     *      Number. Number of points.
      * ax
-     *      Array. X coordinates in LY. 
+     *      Array. X coordinates in LY.
      * ay
-     *      Array. Y coordinates in LY. 
+     *      Array. Y coordinates in LY.
      * con
-     *      Boolean. Optional. Concave shapes may need to set it. 
+     *      Boolean. Optional. Concave shapes may need to set it.
      *
      * Type 4 (Route):
      *
      * pos
-     *      Array. Pairs of coordinates in LY in x,y format, e.g. [[8,34.6],[...]] 
+     *      Array. Pairs of coordinates in LY in x,y format, e.g. [[8,34.6],[...]]
      *
      * @param obj
      *              object with the following properties:
@@ -1566,7 +1566,7 @@ player, removeFrameCallback, setScreenBackground, setScreenOverlay, system, worl
         var c,
         i;
 
-        if (this.restartDelay !== 'undefined') {
+        if (typeof this.restartDelay === 'number') {
             c = (new Date()).getTime() - this.restartDelay;
 
             if (c < this.bgsDelay) {
@@ -1650,7 +1650,6 @@ player, removeFrameCallback, setScreenBackground, setScreenOverlay, system, worl
 
         if (cond === "DOCK") {
             i = d.length;
-
             while (i) {
                 i -= 1;
 
@@ -1707,7 +1706,13 @@ player, removeFrameCallback, setScreenBackground, setScreenOverlay, system, worl
         }
 
         if (this.logging) {
-            log(this.name, this.name + ': New set:' + cond + ' containing:' + a.length + ' entries.' + a);
+            log(this.name, this.name + ': New set:' + cond + ' containing:' + a.length + ' entries.');
+            i = a.length;
+
+            while (i) {
+                i -= 1;
+                log(this.name, "a[" + i + "]: " + JSON.stringify(a[i]));
+            }
         }
 
         return a;
@@ -1740,6 +1745,7 @@ player, removeFrameCallback, setScreenBackground, setScreenOverlay, system, worl
 
                 if (this.bgsSCA.isPlaying) {
                     this.bgsSCA.stop();
+
                     return;
                 }
 
@@ -1793,12 +1799,16 @@ player, removeFrameCallback, setScreenBackground, setScreenOverlay, system, worl
         }
 
         i = this.bgsCurrentSet.length;
-
+        
         while (i) {
             i -= 1;
             a = this.bgsCurrentSet[i].type;
 
-            if (player[a] !== 'undefined') {
+            if (player[a] === 'undefined' && player.ship[a] === 'undefined') {
+                continue;
+            }
+
+            if (player.ship[a] === 'undefined') {
                 cu = player[a];
 
                 if (cu !== this.bgsCurrentSet[i].muteOn) {
@@ -1823,66 +1833,64 @@ player, removeFrameCallback, setScreenBackground, setScreenOverlay, system, worl
                     this.bgsCurrentSet[i].cmp = cu;
                 }
             } else {
-                if (player.ship[a] !== 'undefined') {
-                    cu = player.ship[a];
+                cu = player.ship[a];
 
-                    if (cu !== this.bgsCurrentSet[i].muteOn) {
-                        if (player.ship.docked &&
-                            guiScreen === this.bgsCurrentSet[i].init &&
-                            guiScreen !== this.bgsCurrentSet[i].cmp) {
+                if (cu !== this.bgsCurrentSet[i].muteOn) {
+                    if (player.ship.docked &&
+                        guiScreen === this.bgsCurrentSet[i].init &&
+                        guiScreen !== this.bgsCurrentSet[i].cmp) {
+                        this.chPlay(this.bgsCurrentSet[i], 1);
+                    }
+
+                    if (!this.bgsCurrentSet[i].init && this.bgsCurrentSet[i].cmp === cu) {
+                        if (this.bgsCurrentSet[i].src === 3 && !this.bgsSCC.isPlaying) {
+                            this.bgsCurrentSet[i].init = 1;
+                            this.bgsCurrentSet[i].cmp = 0;
+                        }
+
+                        continue;
+                    }
+
+                    switch (this.bgsCurrentSet[i].change) {
+                    case 1:
+                        if (cu > this.bgsCurrentSet[i].cmp + this.bgsJitterRemove) {
                             this.chPlay(this.bgsCurrentSet[i], 1);
                         }
 
-                        if (!this.bgsCurrentSet[i].init && this.bgsCurrentSet[i].cmp === cu) {
-                            if (this.bgsCurrentSet[i].src === 3 && !this.bgsSCC.isPlaying) {
-                                this.bgsCurrentSet[i].init = 1;
-                                this.bgsCurrentSet[i].cmp = 0;
-                            }
-
-                            continue;
+                        break;
+                    case  - 1:
+                        if (cu < this.bgsCurrentSet[i].cmp - this.bgsJitterRemove) {
+                            this.chPlay(this.bgsCurrentSet[i], 1);
                         }
 
-                        switch (this.bgsCurrentSet[i].change) {
-                        case 1:
-                            if (cu > this.bgsCurrentSet[i].cmp + this.bgsJitterRemove) {
-                                this.chPlay(this.bgsCurrentSet[i], 1);
-                            }
-
-                            break;
-                        case  - 1:
-                            if (cu < this.bgsCurrentSet[i].cmp - this.bgsJitterRemove) {
-                                this.chPlay(this.bgsCurrentSet[i], 1);
-                            }
-
-                            break;
-                        case 0:
-                            if (cu !== this.bgsCurrentSet[i].cmp) {
-                                this.chPlay(this.bgsCurrentSet[i], 1);
-                            }
-
-                            break;
-                        case 2:
-                            if (cu !== this.bgsCurrentSet[i].cmp) {
-                                this.chPlay(this.bgsCurrentSet[i], 1);
-                            }
-
-                            break;
+                        break;
+                    case 0:
+                        if (cu !== this.bgsCurrentSet[i].cmp) {
+                            this.chPlay(this.bgsCurrentSet[i], 1);
                         }
 
-                        if (typeof this.bgsCurrentSet[i].init === 'number') {
-                            this.bgsCurrentSet[i].init = 0;
-                            this.bgsCurrentSet[i].cmp = cu;
-                        } else {
-                            this.bgsCurrentSet[i].cmp = guiScreen;
-                        }
-                    } else {
-                        if (this.bgsCurrentSet[i].muteOn === -1) {
-                            continue;
+                        break;
+                    case 2:
+                        if (cu !== this.bgsCurrentSet[i].cmp) {
+                            this.chPlay(this.bgsCurrentSet[i], 1);
                         }
 
-                        this.bgsCurrentSet[i].cmp = cu;
-                        this.chPlay(this.bgsCurrentSet[i]);
+                        break;
                     }
+
+                    if (typeof this.bgsCurrentSet[i].init === 'number') {
+                        this.bgsCurrentSet[i].init = 0;
+                        this.bgsCurrentSet[i].cmp = cu;
+                    } else {
+                        this.bgsCurrentSet[i].cmp = guiScreen;
+                    }
+                } else {
+                    if (this.bgsCurrentSet[i].muteOn === -1) {
+                        continue;
+                    }
+
+                    this.bgsCurrentSet[i].cmp = cu;
+                    this.chPlay(this.bgsCurrentSet[i]);
                 }
             }
         }

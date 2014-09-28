@@ -62,9 +62,9 @@ function process() {
 echo "= $EXPORTDIR ="
 echo "== Updating variables =="
 find $EXPORTDIR/$OXPNAME.oxp/Scripts -type f -iname "*.js" -exec tools/process_file.sh $PWD {} \;
-echo "== Touching directories =="
+echo "== Fixing directory ACL's =="
 find $EXPORTDIR -type d -exec chown -c $USER.Users {} \; -exec chmod -c 0755 {} \;
-echo "== Touching files =="
+echo "== Fixing file ACL's =="
 find $EXPORTDIR -type f -exec chown -c $USER.Users {} \; -exec chmod -c 0644 {} \;
 echo "== Fixing reference times =="
 
