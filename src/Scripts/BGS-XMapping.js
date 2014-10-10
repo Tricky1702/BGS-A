@@ -28,6 +28,12 @@ loopfunc: true, noarg: true, noempty: true, strict: true, nonew: true, undef: tr
     this.name = "BGS-XMapping";
     this.version = "1.10.1";
 
+    /* World script event handlers. */
+
+    /**
+     * We only need to do this once.
+     * This will get redefined after a new game or loading of a new Commander.
+     */
     this.startUp = function () {
         var ccf = worldScripts.Cabal_Common_Functions,
         snoopersCheck = ["snoopers", null];
@@ -71,7 +77,7 @@ loopfunc: true, noarg: true, noempty: true, strict: true, nonew: true, undef: tr
 
         this.minInter = 4; // minimum days - release 4
         this.maxInter = 15; // maximum days - release 15
-        this.logging = true;
+        this.logging = false;
         this.xmaps = {
             // regions
             areas : [{
@@ -2061,6 +2067,10 @@ loopfunc: true, noarg: true, noempty: true, strict: true, nonew: true, undef: tr
         this.ini = 1;
         this.block = clock.days + this.helper.randSpan(this.minInter, this.maxInter);
 
+        if (this.logging) {
+            this.block = 1;
+        }
+
         if (missionVariables.bgs_mapStats) {
             this.mapStats = JSON.parse(missionVariables.bgs_mapStats);
             this.mapStats.forEach(this.changeToN, this);
@@ -2093,6 +2103,106 @@ loopfunc: true, noarg: true, noempty: true, strict: true, nonew: true, undef: tr
         this.jobDone = [0, 0, 0, 0, 0, 0, 0, 0];
     };
 
+    /**
+     * Called when the player’s alert status (player.alertCondition) changes.
+     * Only the player and stations have an alert condition. (world script and station scripts)
+     *
+     * Called when the guiScreen changes.
+     *
+     * Note that the screen can have changed again in the meantime by the action of other oxps.
+     * Therefore, it will generally better to test for the global guiScreen to see which page is really on display
+     * instead of using the "to" parameter. (world script only)
+     *
+     * This handler will not fire for every screen the player can switch to, but only when switching to any of the
+     * following screens:
+     *
+     * GUI_SCREEN_MAIN, GUI_SCREEN_STATUS, GUI_SCREEN_MANIFEST, GUI_SCREEN_SYSTEM_DATA, GUI_SCREEN_OPTIONS,
+     * GUI_SCREEN_EQUIP_SHIP, GUI_SCREEN_SHIPYARD, GUI_SCREEN_SHORT_RANGE_CHART, GUI_SCREEN_LONG_RANGE_CHART,
+     * GUI_SCREEN_MARKET, GUI_SCREEN_REPORT, GUI_SCREEN_INTERFACES
+     *
+     * Called if there are no mission / report screens active, and the player is docked to a station.
+     * It gets fired at game startup, upon docking, and after a docking report or previous mission screen has ended.
+     * (world script only)
+     */
+    this.alertConditionChanged = this.guiScreenChanged = this.missionScreenOpportunity = function () {
+        if (this.ini) {
+            this.doIni();
+            this.checkDone();
+        }
+
+        delete this.alertConditionChanged;
+        delete this.guiScreenChanged;
+        delete this.missionScreenOpportunity;
+    };
+
+    /**
+     * Called whenever the player saves a game.
+     */
+    this.playerWillSaveGame = function () {
+        missionVariables.bgs_mapStats = JSON.stringify(this.mapStats);
+
+        this.guiScreenChanged = function () {
+            missionVariables.bgs_mapStats = null;
+            delete this.guiScreenChanged;
+        };
+    };
+
+    /**
+     * Called at the end of the docking tunnel effect.
+     */
+    this.shipDockedWithStation = function () {
+        if (this.ini || this.block > clock.days) {
+            return;
+        }
+
+        if (system.isInterstellarSpace || system.sun.isGoingNova || system.sun.hasGoneNova) {
+            return;
+        }
+
+        var q = Math.floor(Math.random() * 3),
+        c = this.checkMissing(q),
+        en;
+
+        if (c) {
+            en = this.getSpecific(q, c - 1, galaxyNumber);
+
+            if (en.hasOwnProperty("sn")) {
+                this.buildSnoopersMessage(en, c);
+            } else if (en.hasOwnProperty("direct")) {
+                switch (q) {
+                case 0:
+                    worldScripts["BGS-M"].addToLRC(en);
+                    break;
+                case 1:
+                    worldScripts["BGS-M"].addToLRC(en);
+                    break;
+                case 2:
+                    worldScripts["BGS-M"].addToLRCSpecial(en);
+                    break;
+                }
+
+                this.mapStats[galaxyNumber][q] |= Math.pow(2, c - 1);
+            }
+        }
+
+        return;
+    };
+
+    /**
+     * Called at the end of the launch tunnel effect.
+     */
+    this.shipLaunchedFromStation = function () {
+        if (this.logging) {
+            log(this.name,
+                "Current galaxy bitmask: " + this.mapStats[galaxyNumber] + " Next date: " + (this.block + 1));
+        }
+    };
+
+    /* Other global functions. */
+
+    /**
+     * @param desc
+     */
     this.killSelf = function (desc) {
         var prop;
 
@@ -2114,33 +2224,18 @@ loopfunc: true, noarg: true, noempty: true, strict: true, nonew: true, undef: tr
         return;
     };
 
+    /**
+     * @param element
+     */
     this.changeToN = function (element) {
         element[0] = parseInt(element[0], null);
         element[1] = parseInt(element[1], null);
         element[2] = parseInt(element[2], null);
     };
 
-    this.playerWillSaveGame = function () {
-        missionVariables.bgs_mapStats = JSON.stringify(this.mapStats);
-
-        this.guiScreenChanged = function () {
-            missionVariables.bgs_mapStats = null;
-            delete this.guiScreenChanged;
-        };
-    };
-
-    this.alertConditionChanged = this.guiScreenChanged = this.missionScreenOpportunity = function () {
-        if (this.ini) {
-            this.doIni();
-            this.checkDone();
-        }
-
-        delete this.alertConditionChanged;
-        delete this.guiScreenChanged;
-        delete this.missionScreenOpportunity;
-    };
-
-    // insert basic set
+    /**
+     * Insert basic set
+     */
     this.doIni = function () {
         var cl = 0,
         cp = 0,
@@ -2196,7 +2291,9 @@ loopfunc: true, noarg: true, noempty: true, strict: true, nonew: true, undef: tr
         return;
     };
 
-    // check current galaxy
+    /**
+     * Check current galaxy
+     */
     this.checkMissing = function (what) {
         var max = Math.pow(2, this.mapMax[galaxyNumber][what]) - 1,
         cur = this.mapStats[galaxyNumber][what],
@@ -2212,7 +2309,9 @@ loopfunc: true, noarg: true, noempty: true, strict: true, nonew: true, undef: tr
         return 0;
     };
 
-    // get entry
+    /**
+     * Get entry
+     */
     this.getSpecific = function (t, w, g) {
         var r,
         c = 0,
@@ -2245,52 +2344,9 @@ loopfunc: true, noarg: true, noempty: true, strict: true, nonew: true, undef: tr
         return 0;
     };
 
-    this.shipDockedWithStation = function () {
-        if (this.ini || this.block > clock.days) {
-            return;
-        }
-
-        if (system.isInterstellarSpace || system.sun.isGoingNova || system.sun.hasGoneNova) {
-            return;
-        }
-
-        var q = Math.floor(Math.random() * 3),
-        c = this.checkMissing(q),
-        en;
-
-        if (c) {
-            en = this.getSpecific(q, c - 1, galaxyNumber);
-
-            if (en.hasOwnProperty("sn")) {
-                this.buildSnoopersMessage(en, c);
-            } else if (en.hasOwnProperty("direct")) {
-                switch (q) {
-                case 0:
-                    worldScripts["BGS-M"].addToLRC(en);
-                    break;
-                case 1:
-                    worldScripts["BGS-M"].addToLRC(en);
-                    break;
-                case 2:
-                    worldScripts["BGS-M"].addToLRCSpecial(en);
-                    break;
-                }
-
-                this.mapStats[galaxyNumber][q] |= Math.pow(2, c - 1);
-            }
-        }
-
-        return;
-    };
-
-    this.shipLaunchedFromStation = function () {
-        if (this.logging) {
-            log(this.name,
-                "Current galaxy bitmask: " + this.mapStats[galaxyNumber] + " Next date: " + (this.block + 1));
-        }
-    };
-
-    // sum xy
+    /**
+     * Sum xy
+     */
     this.getCPX = function (element) {
         this.p.x += element;
     };
@@ -2304,7 +2360,9 @@ loopfunc: true, noarg: true, noempty: true, strict: true, nonew: true, undef: tr
         this.p.x += element[0];
     };
 
-    // prepare Snoopers message
+    /**
+     * Prepare Snoopers message
+     */
     this.buildSnoopersMessage = function (obj, c) {
         var a = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"],
         m = "Map-Update #" + (obj.gal + 1),
@@ -2379,7 +2437,12 @@ loopfunc: true, noarg: true, noempty: true, strict: true, nonew: true, undef: tr
         return;
     };
 
-    // Snoopers callback
+    /**
+     * Snoopers callback
+     *
+     * @param which
+     *              first 20 characters of the passed message
+     */
     this.newsDisplayed = function (which) {
         var a = which.slice(12),
         gal = parseInt(a[0], null) - 1,
@@ -2445,6 +2508,9 @@ loopfunc: true, noarg: true, noempty: true, strict: true, nonew: true, undef: tr
         return;
     };
 
+    /**
+     *
+     */
     this.checkDone = function () {
         var a = 0,
         j;
