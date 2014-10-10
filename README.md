@@ -1,11 +1,11 @@
 # BGS-A
-BGS-A 1.9 for Oolite
+BGS-A 1.10 for Oolite
 
 Copyright 2010-2014 by P.A.Groove, Phantor Gorth, Thargoid, Svengali and Tricky.
 
 Licences: see below
 
-August 2014
+September 2014
 
 # OVERVIEW
 Backgroundset (or short BGS) is a framework for images, sounds and music. It ships more than 100 sounds, images for all
