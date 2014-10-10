@@ -70,8 +70,10 @@ ADDONDIRS := $(patsubst %,%/AddOns,$(OXPINSTALL))
 
 ifeq ($(SUBDIR),)
 	OXPDIRS := $(patsubst %,%/$(OXPNAME),$(ADDONDIRS))
+	ALLOXPDIRS := $(patsubst %,%/$(_NAME)_*.oxp,$(ADDONDIRS))
 else
 	OXPDIRS := $(patsubst %,%/$(SUBDIR)/$(OXPNAME),$(ADDONDIRS))
+	ALLOXPDIRS := $(patsubst %,%/$(SUBDIR)/$(_NAME)_*.oxp,$(ADDONDIRS))
 endif
 
 ifeq ($(OXZ),true)
@@ -106,6 +108,7 @@ test:
 	@echo "VERREV:              \`$(VERREV)'"
 	@echo "BASENAME:            \`$(BASENAME)'"
 	@echo "OXPNAME:             \`$(OXPNAME)'"
+	@echo "ALLOXPDIRS:          \`$(ALLOXPDIRS)'"
 	@echo "OXPDIRS:             \`$(OXPDIRS)'"
 ifeq ($(OXZ),true)
 	@echo "_IDENTIFIER:         \`$(_IDENTIFIER)'"
@@ -183,7 +186,7 @@ endif
 
 cleanoxp:
 	$(RM) -r $(BASEDIR)/$(BASENAME)
-	$(RM) -r $(OXPDIRS)
+	$(RM) -r $(ALLOXPDIRS)
 ifeq ($(OXZ),true)
 	$(RM) $(OXZPATH)
 endif
