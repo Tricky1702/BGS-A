@@ -1155,7 +1155,6 @@ oolite, player, removeFrameCallback, setScreenBackground, setScreenOverlay, syst
             (typeof obj.action !== "string" &&
                 (typeof obj.ov !== "string" &&
                     typeof obj.gal !== "number"))) {
-
             return false;
         }
 
@@ -1164,7 +1163,6 @@ oolite, player, removeFrameCallback, setScreenBackground, setScreenOverlay, syst
             if (typeof obj.posx !== 'number' ||
                 typeof obj.posy !== 'number' ||
                 typeof obj.radi !== 'number') {
-
                 return false;
             }
 
@@ -1175,7 +1173,6 @@ oolite, player, removeFrameCallback, setScreenBackground, setScreenOverlay, syst
                 typeof obj.posy !== 'number' ||
                 typeof obj.w !== 'number' ||
                 typeof obj.h !== 'number') {
-
                 return false;
             }
 
@@ -1185,7 +1182,6 @@ oolite, player, removeFrameCallback, setScreenBackground, setScreenOverlay, syst
             if (typeof obj.nvert !== 'number' ||
                 typeof obj.ax !== 'object' ||
                 typeof obj.ay !== 'object') {
-
                 return false;
             }
 
@@ -1576,7 +1572,6 @@ oolite, player, removeFrameCallback, setScreenBackground, setScreenOverlay, syst
 
         this.bgsCurrentSet = this.selectFromPool("DOCK");
         i = this.bgsCurrentSet.length;
-
         while (i) {
             i -= 1;
             this.bgsCurrentSet[0].cmp = 0;
@@ -1608,7 +1603,6 @@ oolite, player, removeFrameCallback, setScreenBackground, setScreenOverlay, syst
         }
 
         i = b.length;
-
         while (i) {
             i -= 1;
 
@@ -1708,7 +1702,6 @@ oolite, player, removeFrameCallback, setScreenBackground, setScreenOverlay, syst
         if (this.logging) {
             log(this.name, this.name + ': New set:' + cond + ' containing:' + a.length + ' entries.');
             i = a.length;
-
             while (i) {
                 i -= 1;
                 log(this.name, "a[" + i + "]: " + JSON.stringify(a[i]));
@@ -1799,7 +1792,6 @@ oolite, player, removeFrameCallback, setScreenBackground, setScreenOverlay, syst
         }
 
         i = this.bgsCurrentSet.length;
-        
         while (i) {
             i -= 1;
             a = this.bgsCurrentSet[i].type;
@@ -1858,7 +1850,7 @@ oolite, player, removeFrameCallback, setScreenBackground, setScreenOverlay, syst
                         }
 
                         break;
-                    case  - 1:
+                    case -1:
                         if (cu < this.bgsCurrentSet[i].cmp - this.bgsJitterRemove) {
                             this.chPlay(this.bgsCurrentSet[i], 1);
                         }
