@@ -939,12 +939,13 @@ oolite, player, removeFrameCallback, setScreenBackground, setScreenOverlay, syst
 
             if ((this.EIntA & 8)) {
                 this.bgsQPatch = true;
+
                 this.shipSpawned = function (ship) {
                     if (ship.isValid &&
                         ship.isMine &&
-                        ship.AI === "timebombAI.plist" &&
                         ship.name === "Quirium Cascade Mine" &&
-                        ship.script.name === "oolite-default-ship-script") {
+                        ship.script.name === "oolite-default-ship-script" &&
+                        (ship.AI === "timebombAI.plist" || ship.AIScript === "oolite-qbombAI.js")) {
 
                         if (ship.script.shipDied) {
                             ship.script.bgsShipDied = ship.script.shipDied;
