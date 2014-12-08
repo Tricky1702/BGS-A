@@ -1828,6 +1828,10 @@ oolite, player, removeFrameCallback, setScreenBackground, setScreenOverlay, syst
             } else {
                 cu = player.ship[a];
 
+                if (a === "speed" && cu > player.ship.maxSpeed * 32.0) {
+                    cu = player.ship.maxSpeed * 32.0;
+                }
+
                 if (cu !== this.bgsCurrentSet[i].muteOn) {
                     if (player.ship.docked &&
                         guiScreen === this.bgsCurrentSet[i].init &&
