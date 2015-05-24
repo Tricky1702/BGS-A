@@ -108,8 +108,8 @@ oolite, player, removeFrameCallback, setScreenBackground, setScreenOverlay, syst
 
         this.Collision2D = new ccf.Cabal_Common_2DCollision();
 
-        if (oolite.gameSettings.shaderEffectsLevel === 'SHADERS_OFF' ||
-            oolite.gameSettings.shaderEffectsLevel === 'SHADERS_NOT_SUPPORTED') {
+        if (oolite.gameSettings.detailLevel === 'DETAIL_LEVEL_MINIMUM' ||
+            oolite.gameSettings.detailLevel === 'DETAIL_LEVEL_NORMAL') {
             this.bgsHyperFX = false;
             this.bgsDockingFX = false;
         }
